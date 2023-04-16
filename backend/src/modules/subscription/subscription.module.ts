@@ -1,14 +1,12 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '../database/database.module.js';
-import {
-  SubscriptionRepository,
-  subscriptionRepositoryProvider,
-} from './subscription.repository.js';
+import { provideRepository } from '../database/utils/provide-repository.js';
+import { SubscriptionRepository } from './subscription.repository.js';
 
 @Module({
   imports: [DatabaseModule],
   controllers: [],
-  providers: [subscriptionRepositoryProvider],
+  providers: [...provideRepository(SubscriptionRepository)],
   exports: [SubscriptionRepository],
 })
 export class SubscriptionModule {}
