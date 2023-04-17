@@ -12,7 +12,7 @@ export async function up(knex: knex.Knex): Promise<void> {
     table.jsonb('data').nullable();
     table.string('type', 20).notNullable();
     table.string('status', 20).notNullable();
-    table.string('card', 20).notNullable();
+    table.string('card', 20).nullable();
     table.text('description').notNullable();
     table.bigint('amount').notNullable();
     table.timestamp('createdAt', { precision: 3 }).notNullable().defaultTo(knex.fn.now());

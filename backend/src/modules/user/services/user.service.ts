@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { addDays, startOfToday } from 'date-fns';
 import { SubscriptionRepository } from '../../subscription/subscription.repository.js';
 import { User } from '../entities/user.entity.js';
 import { UserRepository, UserSubscriptionRepository } from '../user.repository.js';
-import { ICreateUserDTO } from '../user.type.js';
+import { ICreateUserDTO, IUserProfile } from '../types/user.type.js';
+import { EUserSubscriptionStatus } from '../types/user-subscription.type.js';
 
 @Injectable()
 export class UserService {
@@ -14,6 +15,10 @@ export class UserService {
   ) {}
 
   async createUser(payload: ICreateUserDTO): Promise<User> {
+    if (await this.rUser.exist({ where: { email: payload.email } })) {
+      throw new ConflictException('User with email already exists');
+    }
+
     const subscription = await this.rSubscription.findOneOrFail({ where: { id: 'free_trial' } });
     const user = await this.rUser.save(
       this.rUser.create({
@@ -27,11 +32,20 @@ export class UserService {
       this.rUserSubscription.create({
         userId: user.id,
         subscriptionId: subscription.id,
-        subscriptionStartDate: subscription ? startOfToday() : null,
-        subscriptionEndDate: subscription ? addDays(startOfToday(), subscription.duration) : null,
+        status: EUserSubscriptionStatus.active,
+        startDate: subscription ? startOfToday() : null,
+        endDate: subscription ? addDays(startOfToday(), subscription.duration) : null,
       }),
     );
 
     return user;
+  }
+
+  async getProfile(userId: string): Promise<IUserProfile> {
+    const user = await this.rUser.findOneBy({ id: userId });
+
+    if (!user) throw new NotFoundException('User not found');
+
+    return { user };
   }
 }

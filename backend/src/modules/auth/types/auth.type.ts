@@ -1,7 +1,7 @@
 import { Request } from 'express';
-import { REQ_CTX } from '../../config/constants.js';
-import { User } from '../user/entities/user.entity.js';
-import { ICreateUserDTO } from '../user/user.type.js';
+import { REQ_CTX } from '../../../config/constants.js';
+import { User } from '../../user/entities/user.entity.js';
+import { ICreateUserDTO } from '../../user/types/user.type.js';
 
 export interface IJWTPayload {
   iss: string;

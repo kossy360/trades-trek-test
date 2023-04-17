@@ -11,9 +11,12 @@ export class UserSubscription {
   @Column({ type: 'varchar', length: 50, nullable: true })
   nextSubscriptionId!: string;
 
-  @Column({ nullable: true, type: 'date' })
-  subscriptionStartDate!: Date | null;
+  @Column({ type: 'varchar', length: 20 })
+  status!: string;
 
   @Column({ nullable: true, type: 'date' })
-  subscriptionEndDate!: Date | null;
+  startDate!: Date | null;
+
+  @Column({ nullable: true, type: 'date' })
+  endDate!: Date | null;
 }

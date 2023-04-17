@@ -1,4 +1,5 @@
-import { Column, Entity } from 'typeorm';
+import { BeforeInsert, Column, Entity } from 'typeorm';
+import { generateId } from '../../../common/utils/generate-id.js';
 
 @Entity('User')
 export class User {
@@ -14,6 +15,11 @@ export class User {
   @Column({ length: 500 })
   email!: string;
 
-  @Column('text')
-  password!: string;
+  @Column('text', { select: false })
+  password?: string;
+
+  @BeforeInsert()
+  setId() {
+    this.id = generateId();
+  }
 }

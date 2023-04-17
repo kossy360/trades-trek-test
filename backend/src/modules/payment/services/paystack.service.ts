@@ -14,7 +14,7 @@ export class PaystackService {
     this.client = got.extend({
       prefixUrl: 'https://api.paystack.co',
       headers: {
-        authorization: process.env.PAYSTACK_SECRET_KEY,
+        authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
         'content-type': 'application/json',
       },
     });
@@ -23,7 +23,13 @@ export class PaystackService {
   async init(ref: string, email: string, amount: number): Promise<IPaystackInitTransaction> {
     const res = await this.client
       .post('transaction/initialize', {
-        json: { reference: ref, email, amount, callback_url: '' },
+        json: {
+          reference: ref,
+          email,
+          amount,
+          callback_url: `${process.env.FRONTEND_URL}/subscription/verify-payment`,
+        },
+        throwHttpErrors: false,
       })
       .json<IPaystackResponse<IPaystackInitTransaction>>();
 
