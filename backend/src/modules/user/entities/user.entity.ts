@@ -16,13 +16,4 @@ export class User {
 
   @Column('text')
   password!: string;
-
-  @Column({ type: 'varchar', length: 50, nullable: true })
-  subscriptionId!: string | null;
-
-  @Column({ nullable: true, type: 'date' })
-  subscriptionStartDate!: Date | null;
-
-  @Column({ nullable: true, type: 'date' })
-  subscriptionEndDate!: Date | null;
 }

@@ -1,14 +1,8 @@
 import dotenv from 'dotenv';
-
-dotenv.config();
-
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './modules/app.module.js';
-import path from 'path';
 
-console.log(path.resolve(process.cwd(), '.env'));
-
-console.log(process.env.DATABASE_URL);
+dotenv.config();
 
 const app = await NestFactory.create(AppModule);
 

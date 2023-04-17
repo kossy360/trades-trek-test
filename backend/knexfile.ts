@@ -16,7 +16,7 @@ const knexConfig = {
     },
     migrations: {
       tableName: 'migrations',
-      directory: join(process.cwd(), 'src/database/migrations'),
+      directory: join(process.cwd(), 'src/modules/database/migrations'),
     },
   },
 };
