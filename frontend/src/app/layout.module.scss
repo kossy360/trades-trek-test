@@ -1,0 +1,26 @@
+.body {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid lightgrey;
+}
+
+.navButtons {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.content {
+  padding-bottom: 5rem;
+  overflow: auto;
+}

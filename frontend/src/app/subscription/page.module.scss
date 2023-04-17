@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  grid-auto-flow: column;
+  gap: 2rem;
+  justify-content: center;
+  width: 90%;
+  max-width: 75rem;
+  margin: auto;
+  margin-top: 2rem;
+}
+
+.card {
+  width: 20rem;
+}
