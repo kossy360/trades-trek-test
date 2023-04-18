@@ -7,8 +7,10 @@
   max-width: 75rem;
   margin: auto;
   margin-top: 2rem;
+  flex-wrap: wrap;
 }
 
 .card {
+  height: 20rem;
   width: 20rem;
 }
