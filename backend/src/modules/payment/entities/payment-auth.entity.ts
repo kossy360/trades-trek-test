@@ -11,6 +11,6 @@ export class PaymentAuth {
   @Column({ length: 10 })
   card!: string;
 
-  @Column({ nullable: true, type: 'date' })
+  @Column({ nullable: true, type: 'timestamptz' })
   expiresAt!: Date | null;
 }

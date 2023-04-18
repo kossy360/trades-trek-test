@@ -4,6 +4,7 @@ import { Transaction } from '../entities/transaction.entity.js';
 import { PaymentAuthRepository, TransactionRepository } from '../payment.repository.js';
 import { ETransactionStatus, ETransactionType } from '../types/transaction.type.js';
 import { PaystackService } from './paystack.service.js';
+import { Interval } from '@nestjs/schedule';
 
 @Injectable()
 export class VerifyPaymentService {
@@ -21,7 +22,7 @@ export class VerifyPaymentService {
 
     const paystackRes = await this.paystackService.verify(tx.id);
 
-    if (paystackRes.status === 'success') {
+    if (paystackRes?.status === 'success') {
       const code = paystackRes.authorization.authorization_code;
       const card = `${paystackRes.authorization.bin}****${paystackRes.authorization.last4}`;
       const expiresAt = new Date(
@@ -30,8 +31,6 @@ export class VerifyPaymentService {
       );
       tx.status = ETransactionStatus.completed;
       tx.card = card;
-
-      await this.rTransaction.save(tx);
 
       if (await this.rPaymentAuth.exist({ where: { userId: tx.userId } })) {
         await this.rPaymentAuth.update({ userId: tx.userId }, { code, card, expiresAt });
@@ -45,7 +44,11 @@ export class VerifyPaymentService {
           }),
         );
       }
+    } else {
+      tx.status = ETransactionStatus.failed;
     }
+
+    await this.rTransaction.save(tx);
 
     switch (tx.type) {
       case ETransactionType.subscription:
@@ -56,5 +59,14 @@ export class VerifyPaymentService {
     }
 
     return tx;
+  }
+
+  @Interval(1000 * 60 * 5)
+  async verifyPendingTxs() {
+    const pendingTx = await this.rTransaction.find({
+      where: { status: ETransactionStatus.pending },
+    });
+
+    await Promise.all(pendingTx.map((tx) => this.verify(tx.id).catch(console.log)));
   }
 }

@@ -47,7 +47,7 @@ export class UserSubscriptionService {
       user,
       subscription.price,
       ETransactionType.subscription,
-      { subscriptionId, startDate: startOfToday(), duration: subscription.duration },
+      { subscriptionId, startDate: new Date(), duration: subscription.duration },
       `${subscription.name} payment`,
     );
 
@@ -88,7 +88,7 @@ export class UserSubscriptionService {
     return { ...userSub, subscription };
   }
 
-  @Interval(1000 * 30)
+  @Interval(1000 * 10)
   async checkSubscriptions() {
     const userSubs = await this.rUserSubscription.find({
       where: { endDate: LessThanOrEqual(new Date()) },
@@ -129,6 +129,8 @@ export class UserSubscriptionService {
         } else {
           userSub.status = EUserSubscriptionStatus.expired;
         }
+      } else {
+        userSub.status = EUserSubscriptionStatus.expired;
       }
     }
 

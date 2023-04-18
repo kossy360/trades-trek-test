@@ -63,6 +63,7 @@ export class PaymentService {
       user.email,
       tx.amount,
     );
+
     tx.status =
       paystackRes?.status === 'success' ? ETransactionStatus.completed : ETransactionStatus.failed;
 

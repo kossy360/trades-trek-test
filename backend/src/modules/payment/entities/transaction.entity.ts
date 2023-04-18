@@ -28,7 +28,7 @@ export class Transaction {
   @Column()
   amount!: number;
 
-  @Column({ nullable: true, type: 'date' })
+  @Column({ type: 'timestamptz' })
   createdAt!: Date | null;
 
   @BeforeInsert()

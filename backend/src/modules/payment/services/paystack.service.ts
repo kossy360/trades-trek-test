@@ -17,6 +17,7 @@ export class PaystackService {
         authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
         'content-type': 'application/json',
       },
+      throwHttpErrors: false,
     });
   }
 
@@ -40,16 +41,15 @@ export class PaystackService {
     return res.data;
   }
 
-  async verify(ref: string): Promise<IPaystackVerifyTransaction> {
-    const res = await this.client
-      .get(`transaction/verify/${ref}`)
-      .json<IPaystackResponse<IPaystackVerifyTransaction>>();
+  async verify(ref: string): Promise<IPaystackVerifyTransaction | null> {
+    const res = await this.client.get(`transaction/verify/${ref}`);
 
-    if (!res.status) {
+    if (res.statusCode > 500) {
       throw new ServiceUnavailableException('Unable to verify payment');
     }
+    const data = JSON.parse(res.body) as IPaystackResponse<IPaystackVerifyTransaction>;
 
-    return res.data;
+    return data.status ? data.data : null;
   }
 
   async chargeAuth(
@@ -59,7 +59,7 @@ export class PaystackService {
     amount: number,
   ): Promise<IPaystackVerifyTransaction | null> {
     const res = await this.client
-      .get('transaction/charge_authorization', {
+      .post('transaction/charge_authorization', {
         json: { reference: ref, authorization_code: code, email, amount },
       })
       .json<IPaystackResponse<IPaystackVerifyTransaction>>();
