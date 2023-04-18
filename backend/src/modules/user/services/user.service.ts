@@ -2,9 +2,9 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 import { addDays, startOfToday } from 'date-fns';
 import { SubscriptionRepository } from '../../subscription/subscription.repository.js';
 import { User } from '../entities/user.entity.js';
-import { UserRepository, UserSubscriptionRepository } from '../user.repository.js';
-import { ICreateUserDTO, IUserProfile } from '../types/user.type.js';
 import { EUserSubscriptionStatus } from '../types/user-subscription.type.js';
+import { ICreateUserDTO, IUserProfile } from '../types/user.type.js';
+import { UserRepository, UserSubscriptionRepository } from '../user.repository.js';
 
 @Injectable()
 export class UserService {

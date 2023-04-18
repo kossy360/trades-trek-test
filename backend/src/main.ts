@@ -1,7 +1,7 @@
-import dotenv from 'dotenv';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './modules/app.module.js';
+import dotenv from 'dotenv';
 import morgan from 'morgan';
+import { AppModule } from './modules/app.module.js';
 
 dotenv.config();
 

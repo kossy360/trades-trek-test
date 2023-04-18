@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: frontend
+      target: final
+      args:
+        API_BASE_URL: 'http://backend:8000'
+    ports:
+      - '3000:3000'
+    # volumes:
+      # - ./frontend/src:/app/src
+
+  backend:
+    build:
+      context: backend
+      target: final
+    depends_on:
+      - database
+    ports:
+      - '8000:8000'
+    environment:
+      NODE_ENV: local
+      PORT: 8000
+      DATABASE_URL: postgres://tt-user:tt-password@database:5432/tt-db
+      JWT_SECRET: justAnotherSecret
+      PAYSTACK_SECRET_KEY: sk_test_e8a7e019f5809c87c610eb355f78f1e1f2df19fb
+      FRONTEND_URL: http://localhost:3000
+    volumes:
+      - ./backend/src:/home/backend/src
+
+  database:
+    image: postgres:15-alpine
+    shm_size: 256MB
+    environment:
+      POSTGRES_PASSWORD: tt-password
+      POSTGRES_USER: tt-user
+      POSTGRES_DB: tt-db
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - '5435:5432'
+    volumes:
+      - ./.temp/postgres-data:/var/lib/postgresql/data/pgdata

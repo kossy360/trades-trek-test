@@ -1,5 +1,5 @@
-import { SignupForm } from './SignupForm/SignupForm';
 import styles from './page.module.scss';
+import { SignupForm } from './SignupForm/SignupForm';
 
 const Page = () => {
   return (

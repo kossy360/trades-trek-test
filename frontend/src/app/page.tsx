@@ -1,17 +1,10 @@
 import Link from 'next/link';
 import { authHttp } from '../http/http';
-import {
-  EUserSubscriptionStatus,
-  IUser,
-  IUserProfile,
-  IUserProfileResponse,
-  IUserSubscription,
-  IUserSubscriptionResponse,
-} from '../types/user';
+import { EUserSubscriptionStatus, IUser, IUserSubscriptionResponse } from '../types/user';
 import { getSession } from '../utils/get-session';
 import styles from './page.module.css';
 
-const AuthWelcome = async (props: { user: IUser }): any => {
+const AuthWelcome = async (props: { user: IUser }) => {
   const res = await authHttp.get('user/subscription').json<IUserSubscriptionResponse>();
 
   if (res.data.status === EUserSubscriptionStatus.active) {
@@ -39,6 +32,7 @@ const Home = async () => {
   return (
     <main className={styles.main}>
       {user ? (
+        // @ts-ignore
         <AuthWelcome user={user} />
       ) : (
         <div>

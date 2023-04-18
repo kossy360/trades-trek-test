@@ -1,5 +1,4 @@
 import ky from 'ky';
-import { cookies } from 'next/headers';
 import { getTokenCookie } from '../utils/auth-cookie';
 
 export const http = ky.extend({

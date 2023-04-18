@@ -1,8 +1,6 @@
-import { NextResponse } from 'next/server';
 import { http } from '../../../http/http';
 import { IUserAuthResponse } from '../../../types/user';
 import { setTokenCookie } from '../../../utils/auth-cookie';
-import { HTTPError } from 'ky';
 import { errorToResponse } from '../../../utils/handle-error';
 
 export const POST = async (request: Request) => {

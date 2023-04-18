@@ -1,5 +1,5 @@
 import { LoginForm } from './LoginForm/LoginForm';
-import styles from './page.module.scss'
+import styles from './page.module.scss';
 
 const Page = async () => {
 

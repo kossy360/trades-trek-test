@@ -7,7 +7,7 @@ const tokenKey = 'trades-trek-token';
 export const setTokenCookie = (res: Response, data: IUserAuthResponse) => {
   const cookie = serialize(tokenKey, data.data.token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: false,
     path: '/',
     maxAge: 60 * 60 * 5 - 60,
   });
@@ -18,7 +18,7 @@ export const setTokenCookie = (res: Response, data: IUserAuthResponse) => {
 export const removeTokenCookie = (res: Response) => {
   const cookie = serialize(tokenKey, '', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: false,
     path: '/',
     maxAge: -1,
   });

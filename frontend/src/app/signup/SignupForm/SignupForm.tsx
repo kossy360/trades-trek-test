@@ -2,13 +2,13 @@
 
 import { Formik } from 'formik';
 import ky, { HTTPError } from 'ky';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import * as yup from 'yup';
 import { Form } from '../../../components/Formik/Form/Form';
-import { TextInput } from '../../../components/Formik/TextInput/TextInput';
 import { SubmitButton } from '../../../components/Formik/SubmitButton/SubmitButton';
-import Link from 'next/link';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { TextInput } from '../../../components/Formik/TextInput/TextInput';
 
 interface IForm {
   firstName: string;

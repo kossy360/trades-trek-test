@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { addDays, addMinutes, startOfToday } from 'date-fns';
-import { In, MoreThanOrEqual } from 'typeorm';
+import { Interval } from '@nestjs/schedule';
+import { addMinutes, startOfToday } from 'date-fns';
+import { In, LessThanOrEqual } from 'typeorm';
 import { Transaction } from '../../payment/entities/transaction.entity.js';
 import { PaymentService } from '../../payment/services/payment.service.js';
 import { ETransactionStatus, ETransactionType } from '../../payment/types/transaction.type.js';
@@ -10,7 +11,6 @@ import { UserSubscription } from '../entities/user-subscription.entity.js';
 import { User } from '../entities/user.entity.js';
 import { EUserSubscriptionStatus, IUserSubscriptionFull } from '../types/user-subscription.type.js';
 import { UserRepository, UserSubscriptionRepository } from '../user.repository.js';
-import { Interval } from '@nestjs/schedule';
 
 @Injectable()
 export class UserSubscriptionService {
@@ -64,8 +64,9 @@ export class UserSubscriptionService {
         userId: tx.userId,
         subscriptionId: subData.subscriptionId,
         nextSubscriptionId: subData.subscriptionId,
+        status: EUserSubscriptionStatus.active,
         startDate: new Date(subData.startDate),
-        endDate: addDays(new Date(subData.startDate), subData.duration),
+        endDate: addMinutes(new Date(subData.startDate), 5),
       }),
     );
   }
@@ -87,10 +88,10 @@ export class UserSubscriptionService {
     return { ...userSub, subscription };
   }
 
-  @Interval(1000 * 60 * 5)
+  @Interval(1000 * 30)
   async checkSubscriptions() {
     const userSubs = await this.rUserSubscription.find({
-      where: { endDate: MoreThanOrEqual(addMinutes(new Date(), 5)) },
+      where: { endDate: LessThanOrEqual(new Date()) },
     });
     const subs = await this.rSubscription.find().then((res) =>
       res.reduce((acc, curr) => {
@@ -124,7 +125,7 @@ export class UserSubscriptionService {
 
         if (tx?.status === ETransactionStatus.completed) {
           userSub.startDate = startOfToday();
-          userSub.endDate = addDays(startOfToday(), sub.duration);
+          userSub.endDate = addMinutes(startOfToday(), 5);
         } else {
           userSub.status = EUserSubscriptionStatus.expired;
         }

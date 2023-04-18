@@ -2314,7 +2314,6 @@ __metadata:
     got: ^12.6.0
     jest: 29.5.0
     joi: ^17.9.1
-    jwt: ^0.2.0
     knex: ^2.4.2
     morgan: ^1.10.0
     nanoid: ^4.0.2
@@ -5193,15 +5192,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jwt@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "jwt@npm:0.2.0"
-  dependencies:
-    node-base64: 0.0.1
-  checksum: d02e1935d5675b36a5290a163df8de795814e3fc56bc0101200c40cea8fd7dbd1da94428dda57ddb6ed9ddf4561965d9d96871e60c2c86c5e66ace3b99ad7734
-  languageName: node
-  linkType: hard
-
 "keyv@npm:^4.5.2":
   version: 4.5.2
   resolution: "keyv@npm:4.5.2"
@@ -5821,13 +5811,6 @@ __metadata:
   dependencies:
     node-gyp: latest
   checksum: 2508bd2d2981945406243a7bd31362fc7af8b70b8b4d65f869c61731800058fb818cc2fd36c8eac714ddd0e568cc85becf5e165cebbdf7b5024d5151bbc75ea1
-  languageName: node
-  linkType: hard
-
-"node-base64@npm:0.0.1":
-  version: 0.0.1
-  resolution: "node-base64@npm:0.0.1"
-  checksum: fa681fb3b498ff362bcae12a6042fd55d232ffada852df480aedce462fca2fc32f8b1f353738d551d2c8a9430f8bf2473746277ba539e3b42b915bee2a1876b9
   languageName: node
   linkType: hard
 

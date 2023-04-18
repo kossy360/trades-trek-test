@@ -15,10 +15,11 @@ const Page = async (props: { searchParams: { reference: string; trxref: string }
   }, 3000);
 
   return (
-    <h2 className={styles.container}>
+    <div className={styles.container}>
       <Redirect />
-      {res.message}
-    </h2>
+      <h2>{res.message}</h2>
+      <p>redirecting...</p>
+    </div>
   );
 };
 

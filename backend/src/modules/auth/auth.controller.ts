@@ -1,9 +1,9 @@
 import { Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { successResponse } from '../../common/response/success-response.js';
 import { JoiBody } from '../common/decorators/joi-body.decorator.js';
-import { ILoginDTO, ISignUpDTO } from './types/auth.type.js';
 import { vLogin, vSignup } from './auth.v-schema.js';
 import { AuthService } from './services/auth.service.js';
+import { ILoginDTO, ISignUpDTO } from './types/auth.type.js';
 
 @Controller('auth')
 export class AuthController {

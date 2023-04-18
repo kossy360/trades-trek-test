@@ -1,7 +1,7 @@
+import './globals.scss';
 import Link from 'next/link';
 import { LogoutButton } from '../components/LogoutButton/LogoutButton';
 import { getSession } from '../utils/get-session';
-import './globals.scss';
 import styles from './layout.module.scss';
 
 export const metadata = {
@@ -17,9 +17,7 @@ const RootLayout = async (props: { children: React.ReactNode }) => {
       <body className={styles.body}>
         <div className={styles.topBar}>
           <div className={styles.navButtons}>
-            <Link href="/">
-              <p>Home</p>
-            </Link>
+            <Link href="/">Home</Link>
             {isAuthenticated && <Link href="/subscription">Subscriptions</Link>}
           </div>
           <div className={styles.navButtons}>

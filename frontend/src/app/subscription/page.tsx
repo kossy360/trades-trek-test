@@ -1,17 +1,16 @@
+import classNames from 'classnames';
+import { redirect } from 'next/navigation';
 import { authHttp } from '../../http/http';
 import { IGetSubscriptionsResponse, ISubscription } from '../../types/subscription';
 import {
-  EUserSubscriptionStatus,
-  IUserProfileResponse,
-  IUserSubscription,
-  IUserSubscriptionResponse,
+  EUserSubscriptionStatus, IUserSubscription, IUserSubscriptionResponse
 } from '../../types/user';
 import { getSession } from '../../utils/get-session';
-import { redirect } from 'next/navigation';
-import styles from './page.module.scss';
-import classNames from 'classnames';
-import { SubscribeButton } from './ActionButtons/SubscribeButton';
 import { CancelButton } from './ActionButtons/CancelButton';
+import { SubscribeButton } from './ActionButtons/SubscribeButton';
+import styles from './page.module.scss';
+
+const formatter = new Intl.NumberFormat('en', { currency: 'NGN', style: 'currency' });
 
 const Card = (props: { subscription: ISubscription; userSub: IUserSubscription }) => {
   const isFree = props.subscription.id === 'free_trial';
@@ -20,7 +19,7 @@ const Card = (props: { subscription: ISubscription; userSub: IUserSubscription }
 
   return (
     <div className={classNames('card', 'text-center', styles.card)}>
-      <div className="card-header">{props.subscription.price}</div>
+      <div className="card-header">{formatter.format(props.subscription.price)}</div>
       <div className="card-body">
         <h5 className="card-title">{props.subscription.name}</h5>
         <p className="card-text">{props.subscription.description}</p>

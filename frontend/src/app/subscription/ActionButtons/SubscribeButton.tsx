@@ -1,10 +1,10 @@
 'use client';
 
 import ky from 'ky';
-import { useState } from 'react';
-import { IUserSubscribeResponse } from '../../../types/user';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { LoadingButton } from '../../../components/LoadingButton/LoadingButton';
+import { IUserSubscribeResponse } from '../../../types/user';
 
 export const SubscribeButton = (props: { subscriptionId: string }) => {
   const [isLoading, setIsLoading] = useState(false);
