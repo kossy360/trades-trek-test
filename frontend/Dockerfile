@@ -1,5 +1,5 @@
 FROM node:lts AS builder
-WORKDIR /app
+WORKDIR /home/app
 ARG API_BASE_URL
 COPY package.json package.json
 COPY yarn.lock yarn.lock
@@ -19,7 +19,7 @@ RUN yarn build
 
 
 FROM builder AS final
-WORKDIR /app
+WORKDIR /home/app
 ARG API_BASE_URL
 ENV API_BASE_URL ${API_BASE_URL}
 ENV NODE_ENV production
