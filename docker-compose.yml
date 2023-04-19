@@ -16,7 +16,8 @@ services:
       context: backend
       target: final
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     ports:
       - '8000:8000'
     environment:
@@ -30,13 +31,18 @@ services:
       - ./backend/src:/home/app/src
 
   database:
-    image: postgres:15-alpine
+    image: postgres:15
     shm_size: 256MB
     environment:
       POSTGRES_PASSWORD: tt-password
       POSTGRES_USER: tt-user
       POSTGRES_DB: tt-db
       PGDATA: /var/lib/postgresql/data/pgdata
+    healthcheck:
+      test: "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"
+      interval: 10s
+      timeout: 5s
+      retries: 5
     ports:
       - '5435:5432'
     volumes:

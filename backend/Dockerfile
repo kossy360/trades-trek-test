@@ -1,10 +1,5 @@
 FROM node:lts AS builder
-# See https://github.com/nestjs/nest-cli/issues/484
-RUN apt update && apt install -y procps
-RUN apt install -y netcat
 WORKDIR /home/app
-COPY wait-for wait-for
-RUN chmod u+x wait-for
 COPY yarn.lock yarn.lock
 COPY package.json package.json
 COPY .yarn/cache .yarn/cache/
@@ -19,10 +14,9 @@ COPY nest-cli.json nest-cli.json
 COPY tsconfig.build.json tsconfig.build.json
 COPY tsconfig.json tsconfig.json
 COPY src src
-CMD ["./wait-for", "database:5432", "--", "yarn", "start:dev"]
+CMD ["yarn", "start:dev"]
 
 FROM builder AS final
 WORKDIR /home/app
-RUN chmod u+x wait-for
 RUN yarn build
-CMD ["./wait-for", "database:5432", "--", "yarn", "start:prod"]
+CMD ["yarn", "start:prod"]

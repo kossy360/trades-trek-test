@@ -119,13 +119,13 @@ export class UserSubscriptionService {
           user,
           sub.price,
           ETransactionType.subscription,
-          { subscriptionId: sub.id, startDate: startOfToday(), duration: sub.duration },
+          { subscriptionId: sub.id, startDate: new Date(), duration: sub.duration },
           `${sub.name} payment (renewal)`,
         );
 
         if (tx?.status === ETransactionStatus.completed) {
-          userSub.startDate = startOfToday();
-          userSub.endDate = addMinutes(startOfToday(), 5);
+          userSub.startDate = new Date();
+          userSub.endDate = addMinutes(new Date(), 5);
         } else {
           userSub.status = EUserSubscriptionStatus.expired;
         }
