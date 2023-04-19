@@ -8,8 +8,8 @@ services:
         API_BASE_URL: 'http://backend:8000'
     ports:
       - '3000:3000'
-    # volumes:
-      # - ./frontend/src:/app/src
+    volumes:
+      - ./frontend/src:/app/src
 
   backend:
     build:
@@ -27,7 +27,7 @@ services:
       PAYSTACK_SECRET_KEY: sk_test_e8a7e019f5809c87c610eb355f78f1e1f2df19fb
       FRONTEND_URL: http://localhost:3000
     volumes:
-      - ./backend/src:/home/app/src
+      - ./backend/src:/app/src
 
   database:
     image: postgres:15-alpine

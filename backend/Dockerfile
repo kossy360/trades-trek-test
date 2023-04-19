@@ -4,8 +4,10 @@ FROM node:lts AS builder
 RUN apt update && apt install -y procps
 RUN apt install -y netcat
 
-WORKDIR /home/app
+WORKDIR /app
 
+COPY wait-for wait-for
+RUN chmod u+x wait-for
 COPY wait-for wait-for
 RUN chmod u+x wait-for
 COPY yarn.lock yarn.lock
@@ -27,8 +29,8 @@ CMD ["./wait-for", "database:5432", "--", "yarn", "start:dev"]
 
 FROM builder AS final
 
-WORKDIR /home/app
+WORKDIR /app
 
 RUN yarn build
 
-CMD ["yarn", "start:prod"]
+CMD ["./wait-for", "database:5432", "--", "yarn", "start:prod"]

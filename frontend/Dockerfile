@@ -14,8 +14,8 @@ COPY tsconfig.json tsconfig.json
 COPY next.config.js next.config.js
 COPY public public
 COPY src src
-RUN yarn build
 CMD ["yarn", "dev"]
+RUN yarn build
 
 
 FROM builder AS final
