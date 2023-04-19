@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation';
+
 import { authHttp } from '../../../http/http';
 import { IVerifyPaymentResponse } from '../../../types/payment';
 import styles from './page.module.scss';
@@ -9,10 +9,6 @@ const Page = async (props: { searchParams: { reference: string; trxref: string }
   const res = await authHttp
     .patch(`payment/${ref}/verify`, { throwHttpErrors: false })
     .json<IVerifyPaymentResponse>();
-
-  setTimeout(() => {
-    redirect('/subscription');
-  }, 3000);
 
   return (
     <div className={styles.container}>

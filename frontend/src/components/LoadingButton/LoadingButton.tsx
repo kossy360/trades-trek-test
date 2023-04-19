@@ -1,6 +1,6 @@
+import classNames from 'classnames';
 import { Button, ButtonProps, Spinner } from 'react-bootstrap';
 import styles from './loadingButton.module.scss';
-import classNames from 'classnames';
 
 interface IProps extends ButtonProps {
   children: string;

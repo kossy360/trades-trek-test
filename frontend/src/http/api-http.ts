@@ -1,16 +1,18 @@
-import ky from 'ky';
+import got from 'got';
 import { getTokenCookie } from '../utils/auth-cookie';
 
-export const authHttp = ky.extend({
-  fetch,
+export const apiHttp = got.extend({
   prefixUrl: process.env.API_BASE_URL,
+});
+
+export const authApiHttp = apiHttp.extend({
   hooks: {
     beforeRequest: [
-      async (req) => {
+      async (opts) => {
         const token = getTokenCookie();
 
         if (token) {
-          req.headers.set('Authorization', `Bearer ${token.value}`);
+          opts.headers.Authorization = `Bearer ${token.value}`;
         }
       },
     ],
