@@ -17,7 +17,6 @@ COPY src src
 CMD ["yarn", "dev"]
 RUN yarn build
 
-
 FROM builder AS final
 WORKDIR /home/app
 ARG API_BASE_URL
